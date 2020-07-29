@@ -2,6 +2,7 @@ package com.yc.game.wuzi.swing;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import com.yc.game.common.swing.BoardPanel;
 import com.yc.game.common.swing.BoardWin;
 import com.yc.game.wuzi.base.WuziGame;
 import com.yc.game.wuzi.core.Imgs;
+import com.yc.game.wuzi.core.WuziGameImpl;
 
 /**
  * 游戏主窗口，创建时必须传入游戏对象（参数是接口）
@@ -24,14 +26,23 @@ public class WuziWin extends BoardWin {
 	// 不解释
 	private static final long serialVersionUID = 1L;
 	private MouseAdapter ma;
-	private WuziGame game;
+	private WuziGameImpl game;
+	/**
+	 * 下棋的身份  player1 服务器端   player2客户端 模拟两个人对战
+	 */
+	private int player;
+	/**
+	 * 用于存放 对方下棋的坐标
+	 */
+	public String back=",";
 
 	/**
 	 * 构建窗体
 	 */
-	public WuziWin(WuziGame game) {
+	public WuziWin(WuziGameImpl game,int player) {
 		super("开森五子棋", game, Imgs.CHESS);
 		this.game = game;
+		this.player=player;
 	}
 
 	@Override
@@ -62,7 +73,12 @@ public class WuziWin extends BoardWin {
 					// 获取当前点击的控件
 					BoardLabel ml = (BoardLabel) e.getSource();
 					// 获取控件中保存的坐标, 并在该坐标处下子
-					game.down(ml.getBoardX(), ml.getBoardY());
+					game.down(ml.getBoardX(), ml.getBoardY(),player);
+					
+					/**
+					 * 每次执行下棋操作后 更新一次存入的坐标
+					 */
+					back=ml.getBoardX()+","+ml.getBoardY();
 					// 刷新界面, 显示下的子
 					refresh();
 					// 如果五子连珠成立, 则提示完成

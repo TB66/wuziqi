@@ -27,7 +27,7 @@ public class WuziGameImpl extends WuziGameAbs1 {
 	 * @param y
 	 * @param color
 	 */
-	private void down(int x, int y, int color) {
+	public void down(int x, int y, int color) {
 		if (wuzi != null || color > WHITE || color < SPACE || board[y][x] != SPACE) {
 			return;
 		}

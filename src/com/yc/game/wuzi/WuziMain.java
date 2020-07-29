@@ -11,7 +11,7 @@ import com.yc.game.wuzi.swing.WuziWin;
 public class WuziMain {
 	public static void main(String[] args) {
 		// 传入游戏实现类对象
-		new WuziWin(new WuziGameImpl()).start();
+		//new WuziWin(new WuziGameImpl()).start();
 	}
 
 }
